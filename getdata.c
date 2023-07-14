@@ -13,6 +13,7 @@ typedef enum {
     UNKNOWN_FILE
 } FileType;
 
+
 #define MAX_FILES 10
 
 int getfilenum(char files[][MAX_FILENAME_LENGTH]) {
@@ -45,7 +46,6 @@ int getfilenum(char files[][MAX_FILENAME_LENGTH]) {
     return numFiles;
 }
 
-
 int isSupportedFileType(const char* filename) {
     const char* supportedFileExtensions[] = {".jpg", ".jpeg", ".png"};
     int numSupportedFileExtensions = sizeof(supportedFileExtensions) / sizeof(supportedFileExtensions[0]);
@@ -63,7 +63,7 @@ int isSupportedFileType(const char* filename) {
             return 1;
         }
     }
-    
+
 
     printf("Unsupported file: %s\n", filename);
     printf("Please choose different files with supported extensions (.jpg, .jpeg, .png).\n");
