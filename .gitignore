@@ -1,3 +1,2 @@
-#Empty files
-/converttopdf.c
-/editpdf.c
+editpdf.c
+converttopdf.c
