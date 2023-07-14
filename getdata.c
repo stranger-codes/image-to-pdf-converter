@@ -2,8 +2,10 @@
 #include <string.h>
 #include <jpeglib.h>
 #include <png.h>
+#include <ctype.h>
 
 #define MAX_FILES 10
+#define MAX_FILENAME_LENGTH 200
 
 typedef enum {
     JPEG_FILE,
@@ -11,21 +13,31 @@ typedef enum {
     UNKNOWN_FILE
 } FileType;
 
-int getfilenum(char files[][100]) {
+#define MAX_FILES 10
+
+int getfilenum(char files[][MAX_FILENAME_LENGTH]) {
     int numFiles = 0;
+    char filename[MAX_FILENAME_LENGTH];
 
     // Input the filenames
     printf("Enter the filenames (including the extension):\n");
 
-    // Read filenames until maximum number of files is reached
-    while (numFiles < MAX_FILES) {
-        printf("File %d (or enter blank to finish): ", numFiles + 1);
-        scanf("%s", files[numFiles]);
+    // Read filenames until "stop" is entered or the maximum number of files is reached
+    for (int i = 0; i < MAX_FILES; i++) {
+        printf("File %d (or enter 'stop' to finish): ", i + 1);
+        fgets(filename, sizeof(filename), stdin);
 
-        // Check if the entered filename is blank (empty string)
-        if (strcmp(files[numFiles], "") == 0) {
+        // Remove the newline character from the end of the string
+        filename[strcspn(filename, "\n")] = '\0';
+
+        // Check if the entered filename is "stop"
+        if (strcmp(filename, "stop") == 0) {
             break;
         }
+
+        // Copy the filename into the files array
+        strncpy(files[i], filename, MAX_FILENAME_LENGTH - 1);
+        files[i][MAX_FILENAME_LENGTH - 1] = '\0';  // Ensure null-termination
 
         numFiles++;
     }
@@ -33,23 +45,33 @@ int getfilenum(char files[][100]) {
     return numFiles;
 }
 
+
 int isSupportedFileType(const char* filename) {
     const char* supportedFileExtensions[] = {".jpg", ".jpeg", ".png"};
     int numSupportedFileExtensions = sizeof(supportedFileExtensions) / sizeof(supportedFileExtensions[0]);
 
     const char* extension = strrchr(filename, '.');
     if (extension == NULL) {
+        printf("Extension not found: %s\n", filename);
         return 0;
     }
 
+    printf("Checking file extension: %s\n", extension);
+
     for (int i = 0; i < numSupportedFileExtensions; i++) {
-        if (strcmp(extension, supportedFileExtensions[i]) == 0) {
+        if (strcasecmp(extension, supportedFileExtensions[i]) == 0) {
             return 1;
         }
     }
+    
+
+    printf("Unsupported file: %s\n", filename);
+    printf("Please choose different files with supported extensions (.jpg, .jpeg, .png).\n");
 
     return 0;
 }
+
+
 
 int getdata(const char* files[], int numFiles) {
     // Validate the number of files
@@ -61,6 +83,8 @@ int getdata(const char* files[], int numFiles) {
     // Check if all files have supported file extensions
     for (int i = 0; i < numFiles; i++) {
         const char* file = files[i];
+
+        printf("Processing file: %s\n", file); // Print the filename for verification
 
         if (!isSupportedFileType(file)) {
             printf("Unsupported file: %s\n", file);
@@ -78,14 +102,14 @@ int getdata(const char* files[], int numFiles) {
 
         switch (fileType) {
             case JPEG_FILE:
-                // Use jpeglib to encode JPEG
+                // Process JPEG file
                 printf("Processing JPEG file: %s\n", file);
-                // Add code here to handle JPEG file processing with jpeglib
+                // Add code here to handle JPEG file processing
                 break;
             case PNG_FILE:
-                // Use pnglib to encode PNG
+                // Process PNG file
                 printf("Processing PNG file: %s\n", file);
-                // Add code here to handle PNG file processing with pnglib
+                // Add code here to handle PNG file processing
                 break;
             default:
                 break;
@@ -95,3 +119,5 @@ int getdata(const char* files[], int numFiles) {
     // Continue with other operations or return success
     return 0;
 }
+
+
