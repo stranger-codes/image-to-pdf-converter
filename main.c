@@ -3,13 +3,14 @@
 #include "getdata.h"
 
 int main() {
-    char files[MAX_FILES][100];
-    int numFiles;
+    char files[MAX_FILES][MAX_FILENAME_LENGTH] = {0}; // Initialize the array with zeros
 
-    numFiles = getfilenum(files);
+    int numFiles = getfilenum(files);
     printf("getfilenum completed successfully.\n");
+
     for (int i = 0; i < numFiles; i++) {
-    printf("File %d: %s\n", i + 1, files[i]);}
+        printf("File %d: %s\n", i + 1, files[i]);
+    }
 
     for (int i = 0; i < numFiles; i++) {
         if (!isSupportedFileType(files[i])) {
@@ -21,9 +22,6 @@ int main() {
     printf("isSupportedFileType completed successfully.\n");
 
     printf("files[0]: %s\n", files[0]);
-    
-    for (int i = 0; i < numFiles; i++) {
-    printf("File %d: %s\n", i + 1, files[i]);}
 
     if (getdata(files, numFiles) == 0) {
         printf("Data retrieval and processing completed successfully.\n");
@@ -35,3 +33,4 @@ int main() {
 
     return 0;
 }
+

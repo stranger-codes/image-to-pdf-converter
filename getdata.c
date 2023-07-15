@@ -30,21 +30,30 @@ int getfilenum(char files[][MAX_FILENAME_LENGTH]) {
 
         // Remove the newline character from the end of the string
         filename[strcspn(filename, "\n")] = '\0';
-        printf("Filename: %s\n", filename);
+
         // Check if the entered filename is "stop"
         if (strcmp(filename, "stop") == 0) {
             break;
         }
 
+        // Skip storing empty lines (caused by newline characters)
+        if (filename[0] == '\0') {
+            continue;
+        }
+
         // Copy the filename into the files array
-        strncpy(files[i], filename, MAX_FILENAME_LENGTH - 1);
-        files[i][MAX_FILENAME_LENGTH - 1] = '\0';  // Ensure null-termination
+        strncpy(files[numFiles], filename, MAX_FILENAME_LENGTH - 1);
+        files[numFiles][MAX_FILENAME_LENGTH - 1] = '\0';  // Ensure null-termination
 
         numFiles++;
     }
-    for (int i = 0; i < numFiles; i++) {
-    printf("File %d: %s\n", i + 1, files[i]);}
 
+    for (int i = 0; i < numFiles; i++) {
+        printf("File %d: %s\n", i + 1, files[i]);
+    }
+    for (int i = 0; i < numFiles; i++) {
+        printf("File %d: %s\n", i + 1, files[i]);
+    }
 
     return numFiles;
 }
