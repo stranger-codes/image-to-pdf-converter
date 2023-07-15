@@ -63,7 +63,7 @@ int isSupportedFileType(const char* filename) {
     printf("Checking file extension: %s\n", extension);
 
     for (int i = 0; i < numSupportedFileExtensions; i++) {
-        if (strcasecmp(extension, supportedFileExtensions[i]) == 0) {
+        if (strcmp(extension, supportedFileExtensions[i]) == 0) {
             return 1;
         }
     }
