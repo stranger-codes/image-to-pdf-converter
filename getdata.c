@@ -42,6 +42,9 @@ int getfilenum(char files[][MAX_FILENAME_LENGTH]) {
 
         numFiles++;
     }
+    for (int i = 0; i < numFiles; i++) {
+    printf("File %d: %s\n", i + 1, files[i]);}
+
 
     return numFiles;
 }
