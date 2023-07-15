@@ -30,7 +30,7 @@ int getfilenum(char files[][MAX_FILENAME_LENGTH]) {
 
         // Remove the newline character from the end of the string
         filename[strcspn(filename, "\n")] = '\0';
-
+        printf("Filename: %s\n", filename);
         // Check if the entered filename is "stop"
         if (strcmp(filename, "stop") == 0) {
             break;
@@ -48,6 +48,7 @@ int getfilenum(char files[][MAX_FILENAME_LENGTH]) {
 
     return numFiles;
 }
+
 
 int isSupportedFileType(const char* filename) {
     const char* supportedFileExtensions[] = {".jpg", ".jpeg", ".png"};
@@ -77,13 +78,8 @@ int isSupportedFileType(const char* filename) {
 
 
 int getdata(const char* files[], int numFiles) {
-    // Validate the number of files
-    if (numFiles < 1 || numFiles > MAX_FILES) {
-        printf("Invalid number of files. Please provide between 1 and %d files.\n", MAX_FILES);
-        return -1;
-    }
+    printf("Number of files: %d\n", numFiles);
 
-    // Check if all files have supported file extensions
     for (int i = 0; i < numFiles; i++) {
         const char* file = files[i];
 
@@ -119,8 +115,11 @@ int getdata(const char* files[], int numFiles) {
         }
     }
 
+    printf("Finished processing files.\n");
+
     // Continue with other operations or return success
     return 0;
 }
+
 
 
