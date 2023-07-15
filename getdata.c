@@ -76,8 +76,7 @@ int isSupportedFileType(const char* filename) {
 }
 
 
-
-int getdata(const char* files[], int numFiles) {
+int getdata(char files[][100], int numFiles) {
     printf("files[0]: %s\n", files[0]);
 
     for (int i = 0; i < numFiles; i++) {
