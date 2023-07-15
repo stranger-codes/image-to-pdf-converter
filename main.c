@@ -8,6 +8,8 @@ int main() {
 
     numFiles = getfilenum(files);
     printf("getfilenum completed successfully.\n");
+    for (int i = 0; i < numFiles; i++) {
+    printf("File %d: %s\n", i + 1, files[i]);}
 
     for (int i = 0; i < numFiles; i++) {
         if (!isSupportedFileType(files[i])) {
