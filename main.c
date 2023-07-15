@@ -10,7 +10,6 @@ int main() {
     printf("getfilenum completed successfully.\n");
     for (int i = 0; i < numFiles; i++) {
     printf("File %d: %s\n", i + 1, files[i]);}
-    printf("files[0]: %s\n", files[0]);
 
     for (int i = 0; i < numFiles; i++) {
         if (!isSupportedFileType(files[i])) {
@@ -21,6 +20,8 @@ int main() {
     }
     printf("isSupportedFileType completed successfully.\n");
 
+    printf("files[0]: %s\n", files[0]);
+    
     for (int i = 0; i < numFiles; i++) {
     printf("File %d: %s\n", i + 1, files[i]);}
 
