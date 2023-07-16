@@ -51,9 +51,7 @@ int getfilenum(char files[][MAX_FILENAME_LENGTH]) {
     for (int i = 0; i < numFiles; i++) {
         printf("File %d: %s\n", i + 1, files[i]);
     }
-    for (int i = 0; i < numFiles; i++) {
-        printf("File %d: %s\n", i + 1, files[i]);
-    }
+    
 
     return numFiles;
 }
@@ -86,7 +84,9 @@ int isSupportedFileType(const char* filename) {
 
 
 int getdata(char files[][100], int numFiles) {
-    printf("files[0]: %s\n", files[0]);
+    for (int i = 0; i < numFiles; i++) {
+        printf("File %d: %s\n", i + 1, files[i]);
+    }
 
     for (int i = 0; i < numFiles; i++) {
         const char* file = files[i];
