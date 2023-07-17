@@ -6,7 +6,7 @@
 
 int getfilenum(char files[][MAX_FILENAME_LENGTH]);
 int isSupportedFileType(const char* filename);
-int getdata(char files[][MAX_FILENAME_LENGTH], int numFiles);
+int processdata(char files[][MAX_FILENAME_LENGTH], int numFiles);
 
 #endif  // GETDATA_H
 

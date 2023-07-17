@@ -83,8 +83,7 @@ int isSupportedFileType(const char* filename) {
 }
 
 
-int getdata(char files[][100], int numFiles) {
-    for (int i = 0; i < numFiles; i++) {
+int processdata(char files[][MAX_FILENAME_LENGTH], int numFiles) {    for (int i = 0; i < numFiles; i++) {
         printf("File %d: %s\n", i + 1, files[i]);
     }
 

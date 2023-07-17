@@ -20,10 +20,11 @@ int main() {
         }
     }
     printf("isSupportedFileType completed successfully.\n");
+    for (int i = 0; i < numFiles; i++) {
+        printf("File %d: %s\n", i + 1, files[i]);
+    }
 
-    printf("files[0]: %s\n", files[0]);
-
-    if (getdata(files, numFiles) == 0) {
+    if (processdata(files, numFiles) == 0) {
         printf("Data retrieval and processing completed successfully.\n");
     } else {
         printf("Failed to retrieve and process data.\n");
