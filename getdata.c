@@ -106,12 +106,12 @@ int processdata(char files[][MAX_FILENAME_LENGTH], int numFiles) {
 
         switch (fileType) {
             case JPEG_FILE:
-                // Process JPEG file
+                // Process JPEG file and add encoded data to Encoded_Images array
                 printf("Processing JPEG file: %s\n", file);
                 processJPEGFile(file);
                 break;
             case PNG_FILE:
-                // Process PNG file
+                // Process PNG file and add encoded data to Encoded_Images array
                 printf("Processing PNG file: %s\n", file);
                 processPNGFile(file);
                 break;

@@ -8,10 +8,22 @@
 
 #define MAX_ENCODED_IMAGES 10
 #define MAX_ENCODED_IMAGE_LENGTH 5000 // Adjust the value as needed
-char Encoded_Images[MAX_ENCODED_IMAGES][MAX_ENCODED_IMAGE_LENGTH] = {0};
-int numEncodedImages = 0;
+static char Encoded_Images[MAX_ENCODED_IMAGES][MAX_ENCODED_IMAGE_LENGTH] = {0};
+static int numEncodedImages = 0;
 
 
+const char* getEncodedImage(int index) {
+    if (index >= 0 && index < numEncodedImages) {
+        return Encoded_Images[index];
+    } else {
+        return NULL;
+    }
+}
+
+
+int getNumEncodedImages() {
+    return numEncodedImages;
+}
 
 void addEncodedImage(const char* encodedData, size_t encodedDataSize) {
     if (numEncodedImages >= MAX_ENCODED_IMAGES) {

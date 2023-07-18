@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "getdata.h"
+#include "dataprocessing.h"
 
 int main() {
     char files[MAX_FILES][MAX_FILENAME_LENGTH] = {0}; // Initialize the array with zeros
@@ -24,14 +25,18 @@ int main() {
         printf("File %d: %s\n", i + 1, files[i]);
     }
 
-    if (processdata(files, numFiles) == 0) {
-        printf("Data retrieval and processing completed successfully.\n");
-    } else {
-        printf("Failed to retrieve and process data.\n");
+    // Process data and store the encoded images
+    processdata(files, numFiles); // This will encode the images and store them in the Encoded_Images array.
+
+    // Print or use the encoded images as needed
+    printf("Encoded Images:\n");
+    int numEncodedImages = getNumEncodedImages();
+    for (int i = 0; i < numEncodedImages; i++) {
+        const char* encodedImage = getEncodedImage(i);
+        printf("Encoded Image %d:\n%s\n", i + 1, encodedImage);
     }
 
     printf("getdata completed successfully.\n");
 
     return 0;
 }
-
