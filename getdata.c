@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <jpeglib.h>
 #include <png.h>
 #include <ctype.h>
+#include <b64/cencode.h>
+#include "dataprocessing.h"
+#include "getdata.h"
 
 #define MAX_FILES 10
 #define MAX_FILENAME_LENGTH 200
@@ -12,7 +16,6 @@ typedef enum {
     PNG_FILE,
     UNKNOWN_FILE
 } FileType;
-
 
 #define MAX_FILES 10
 
@@ -83,7 +86,8 @@ int isSupportedFileType(const char* filename) {
 }
 
 
-int processdata(char files[][MAX_FILENAME_LENGTH], int numFiles) {    for (int i = 0; i < numFiles; i++) {
+int processdata(char files[][MAX_FILENAME_LENGTH], int numFiles) {    
+    for (int i = 0; i < numFiles; i++) {
         printf("File %d: %s\n", i + 1, files[i]);
     }
 
@@ -91,12 +95,6 @@ int processdata(char files[][MAX_FILENAME_LENGTH], int numFiles) {    for (int i
         const char* file = files[i];
 
         printf("Processing file: %s\n", file); // Print the filename for verification
-
-        if (!isSupportedFileType(file)) {
-            printf("Unsupported file: %s\n", file);
-            printf("Please choose different files with supported extensions (.jpg, .jpeg, .png).\n");
-            return -1;
-        }
 
         // Process the file based on its type
         FileType fileType = UNKNOWN_FILE;
@@ -110,12 +108,12 @@ int processdata(char files[][MAX_FILENAME_LENGTH], int numFiles) {    for (int i
             case JPEG_FILE:
                 // Process JPEG file
                 printf("Processing JPEG file: %s\n", file);
-                // Add code here to handle JPEG file processing
+                processJPEGFile(file);
                 break;
             case PNG_FILE:
                 // Process PNG file
                 printf("Processing PNG file: %s\n", file);
-                // Add code here to handle PNG file processing
+                processPNGFile(file);
                 break;
             default:
                 break;
