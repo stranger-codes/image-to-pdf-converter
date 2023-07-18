@@ -29,7 +29,7 @@ void createPDFPage(const char* encodedData) {
     }
 
     printf("PDF page created successfully.\n");
-
+    //testing line
     /* Decode the Base64-encoded data */
     size_t encodedLength = strlen(encodedData);
     unsigned char* decodedData = (unsigned char*)malloc(encodedLength);
