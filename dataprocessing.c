@@ -6,6 +6,27 @@
 #include <b64/cencode.h> 
 #include "dataprocessing.h"
 
+#define MAX_ENCODED_IMAGES 10
+#define MAX_ENCODED_IMAGE_LENGTH 5000 // Adjust the value as needed
+char Encoded_Images[MAX_ENCODED_IMAGES][MAX_ENCODED_IMAGE_LENGTH] = {0};
+int numEncodedImages = 0;
+
+
+
+void addEncodedImage(const char* encodedData, size_t encodedDataSize) {
+    if (numEncodedImages >= MAX_ENCODED_IMAGES) {
+        printf("Max number of encoded images reached.\n");
+        return;
+    }
+
+    size_t copySize = encodedDataSize < MAX_ENCODED_IMAGE_LENGTH ? encodedDataSize : MAX_ENCODED_IMAGE_LENGTH - 1;
+    memcpy(Encoded_Images[numEncodedImages], encodedData, copySize);
+    Encoded_Images[numEncodedImages][copySize] = '\0';
+    numEncodedImages++;
+}
+
+
+
 void processJPEGFile(const char* file) {
     FILE* fp = fopen(file, "rb");
     if (!fp) {
@@ -62,8 +83,8 @@ void processJPEGFile(const char* file) {
     bytesEncoded += base64_encode_blockend(encodedData + bytesEncoded, &state);
     encodedData[bytesEncoded] = '\0';
 
-    // Print or use the encoded data as needed
-    printf("Base64 Encoded JPEG data for file %s:\n%s\n", file, encodedData);
+    // Add the encoded data to the Encoded_Images array
+    addEncodedImage(encodedData, bytesEncoded);
 
     // Clean up allocated memory
     free(jpegData);
@@ -146,8 +167,8 @@ void processPNGFile(const char* file) {
     bytesEncoded += base64_encode_blockend(encodedData + bytesEncoded, &state);
     encodedData[bytesEncoded] = '\0';
 
-    // Print or use the encoded data as needed
-    printf("Base64 Encoded PNG data for file %s:\n%s\n", file, encodedData);
+    // Add the encoded data to the Encoded_Images array
+    addEncodedImage(encodedData, bytesEncoded);
 
     // Clean up allocated memory
     free(pngData);
