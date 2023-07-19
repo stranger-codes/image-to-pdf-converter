@@ -80,27 +80,20 @@ void processJPEGFile(const char* file) {
     jpeg_destroy_decompress(&cinfo);
     fclose(fp);
 
- // Encode the JPEG data using Base64
-    base64_encodestate state;
-    base64_init_encodestate(&state);
-    size_t encodedSize = base64_encode_blockend(0, &state); // Determine the size needed for the encoded data
-    char* encodedData = (char*)malloc(encodedSize);
-    if (!encodedData) {
-        printf("Memory allocation failed.\n");
-        free(jpegData);
-        return;
-    }
+// Encode the JPEG data using Base64
+base64_encodestate state;
+base64_init_encodestate(&state);
+char* encodedData = (char*)malloc(2 * jpegDataSize); // Allocate a buffer for the encoded data
+int bytesEncoded = base64_encode_block((const char*)jpegData, jpegDataSize, encodedData, &state);
+encodedData[bytesEncoded] = '\0';
 
-    int bytesEncoded = base64_encode_block((const char*)jpegData, jpegDataSize, encodedData, &state);
-    bytesEncoded += base64_encode_blockend(encodedData + bytesEncoded, &state);
-    encodedData[bytesEncoded] = '\0';
+// Add the encoded data to the Encoded_Images array
+addEncodedImage(encodedData, bytesEncoded);
 
-    // Add the encoded data to the Encoded_Images array
-    addEncodedImage(encodedData, bytesEncoded);
-
-    // Clean up allocated memory
-    free(jpegData);
-    free(encodedData);
+// Clean up allocated memory
+free(jpegData);
+free(encodedData);
+   
 }
 
 void processPNGFile(const char* file) {
@@ -167,20 +160,22 @@ void processPNGFile(const char* file) {
     // Encode the PNG data using Base64
     base64_encodestate state;
     base64_init_encodestate(&state);
-    size_t encodedSize = base64_encode_blockend(0, &state); // Determine the size needed for the encoded data
-    char* encodedData = (char*)malloc(encodedSize);
-    if (!encodedData) {
-        printf("Memory allocation failed.\n");
-        free(pngData);
-        return;
-    }
 
+    // Determine the size needed for the encoded data
+    int encodedSize = base64_encode_block((const char*)pngData, pngDataSize, NULL, &state);
+    char* encodedData = (char*)malloc(encodedSize + 1); // Allocate memory for the encoded data (+1 for null terminator)
+
+    // Perform the actual encoding
     int bytesEncoded = base64_encode_block((const char*)pngData, pngDataSize, encodedData, &state);
-    bytesEncoded += base64_encode_blockend(encodedData + bytesEncoded, &state);
-    encodedData[bytesEncoded] = '\0';
+    encodedData[bytesEncoded] = '\0'; // Add the null terminator to mark the end of the encoded data
 
     // Add the encoded data to the Encoded_Images array
     addEncodedImage(encodedData, bytesEncoded);
+    printf(encodedData);
+
+    // Clean up allocated memory
+    free(pngData);
+    free(encodedData);
 
     // Clean up allocated memory
     free(pngData);
