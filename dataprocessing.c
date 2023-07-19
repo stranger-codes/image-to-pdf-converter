@@ -7,7 +7,7 @@
 #include "dataprocessing.h"
 
 #define MAX_ENCODED_IMAGES 10
-#define MAX_ENCODED_IMAGE_LENGTH 5000 // Adjust the value as needed
+#define MAX_ENCODED_IMAGE_LENGTH 44126208 // Adjust the value as needed
 static char Encoded_Images[MAX_ENCODED_IMAGES][MAX_ENCODED_IMAGE_LENGTH] = {0};
 static int numEncodedImages = 0;
 
