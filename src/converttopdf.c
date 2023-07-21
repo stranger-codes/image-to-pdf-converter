@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <libharu/hpdf.h>
+#include <hpdf.h> // Corrected include statement for libharu
 
 void createPDFPage(const char* encodedData) {
     /* Initialize PDFlib */
