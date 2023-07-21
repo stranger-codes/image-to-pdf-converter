@@ -3,8 +3,6 @@
 #include <string.h>
 #include <libharu/hpdf.h>
 
-#define MAX_ENCODED_DATA_LENGTH 10000
-
 void createPDFPage(const char* encodedData) {
     /* Initialize PDFlib */
     HPDF_Doc pdf;
@@ -37,9 +35,9 @@ void createPDFPage(const char* encodedData) {
     printf("Data decoded successfully. Decoded length: %zu\n", decodedLength);
 
     /* Embed the decoded data as an image */
-    image = HPDF_LoadRawImageFromMem(pdf, decodedData, decodedLength, HPDF_IMAGE_AUTO);
+    image = HPDF_LoadPngImageFromMem(pdf, decodedData, decodedLength);
     if (!image) {
-        printf("Error: Could not load the decoded image data.\n");
+        printf("Error: Could not load the decoded image data as a PNG image.\n");
         free(decodedData);
         HPDF_Free(pdf);
         return;
@@ -82,10 +80,10 @@ void createPDFPage(const char* encodedData) {
 }
 
 int main() {
-    /* Assuming you have the encoded data for the file */
-    const char* encodedData = "Base64-encoded-data";
+    /* Assuming you have the encoded data for the PNG image */
+    const char* encodedData = "Base64-encoded-data"; // Replace "Base64-encoded-data" with the actual Base64-encoded string of the PNG image
 
-    /* Create the PDF page and embed the file */
+    /* Create the PDF page and embed the image */
     createPDFPage(encodedData);
 
     return 0;
